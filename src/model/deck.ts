@@ -60,7 +60,6 @@ class DeckImpl implements Deck {
   }
 
   toMemento(): Record<string, string | number>[] {
-    // serializeCard already returns a precise discriminated union; cast to generic record for memento format
     return this.cards.map(c => serializeCard(c) as unknown as Record<string, string | number>)
   }
 }
@@ -104,7 +103,6 @@ export function createDeckFromMemento(mementoCards: Record<string, string | numb
     if (!isType(rawType)) {
       throw new Error(`Invalid card type: ${rawType}`)
     }
-    // Narrowing: now rawType is Type
     if (rawType === 'NUMBERED') {
       if (cardData.color === undefined || cardData.number === undefined) {
         throw new Error('Numbered cards must have color and number')
